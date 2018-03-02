@@ -28,6 +28,7 @@ class Booking2 extends Component {
   goWebView(){
     const WebScreen = NavigationActions.navigate({
       routeName: "search3",
+      params: { id: item._id }
     });
     this.props.navigation.dispatch(WebScreen);
   }
@@ -50,10 +51,11 @@ class Booking2 extends Component {
             
           </View>
         </View>
-        <Text style={styles.waiting}>Waiting</Text>
-        <Image source={{uri: imageUrl}} style={styles.provider}/>
+        
+        {(item.profileImage)?<Image source={{uri: imageUrl}} style={styles.provider}/>:
+                             <Image source={Images.emptyAccount} style={styles.provider}/> }
+        
         <Text style={styles.name}>{item.profilename}</Text>   
-        <Text style={styles.infoText}>{item.summary}</Text>   
         <Image source={Images.stars} style={styles.star}/>  
         <View style={styles.rowView}>
           <View style={styles.greyView}>
@@ -62,20 +64,20 @@ class Booking2 extends Component {
             </TouchableOpacity>
           </View>
           <View style={styles.greyView}>
-            <Text style={styles.infoText}>Fee</Text>
-            <Text style={styles.infoText}>{item.price.individualPerHour}/ Session</Text>
+            <Text style={styles.infoText}>Average fee</Text>
+            <Text style={styles.infoText}>$20</Text>
           </View>
         </View>
-        <Text style={styles.about}>About Doctor</Text>    
-        <Text style={styles.infoText}>{aboutText}</Text>     
-        <View style={styles.arrowView}> 
-          <Text style={styles.arrowText}>{item.Address}</Text>
-          <View style={styles.arrowImaageView}>
-            <TouchableOpacity>
-              <Image source={Images.arrow} style={styles.arrowImage}/>
-            </TouchableOpacity>
-          </View>   
-        </View>  
+        <View style={{flexDirection:'row',marginHorizontal:Constants.MARGIN*4,marginTop:Constants.MARGIN*2}}>
+          <View style={{flexDirection:'row',flex:1}}>
+            <Text>&#128222;</Text>
+            <Text style={{marginLeft:Constants.MARGIN}} >0452552</Text>
+          </View>
+          <View style={{flexDirection:'row',flex:1,alignItems:'center'}}>
+            <Image source={Images.messagebox} style={styles.messagebox}/>
+            <Text style={{marginLeft:Constants.MARGIN}} >Send Message </Text>
+          </View>
+        </View>
       </View>
     );
   }
@@ -84,6 +86,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.white
+  },
+  messagebox:{
+    width:Constants.MARGIN*4,
+    height:Constants.MARGIN*4/123*85
   },
   arrowImage:{
     width: Constants.MARGIN*4,
@@ -165,8 +171,8 @@ const styles = StyleSheet.create({
   },
   provider:{
     width: Constants.WIDTH/4,
-    height: Constants.WIDTH/3.5,
-    borderRadius: Constants.WIDTH/7,
+    height: Constants.WIDTH/4,
+    borderRadius: Constants.WIDTH/8,
     alignSelf:'center',
     marginTop: Constants.MARGIN*8
   },
@@ -192,7 +198,7 @@ const styles = StyleSheet.create({
   },
   star:{
     width: Constants.WIDTH/5,
-    height: Constants.WIDTH/5/427*73,
+    height: Constants.WIDTH/5/427*70,
     alignSelf:'center',
     marginTop: Constants.MARGIN*2
   },

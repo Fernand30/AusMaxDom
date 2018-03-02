@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: Constants.MARGIN
   },
   headerLeftView:{
-    flex: 1,
+    width:Constants.MARGIN*10,
     justifyContent: 'center'
   },
   headerCenterView:{
@@ -114,13 +114,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   headerRightView:{
-    flex: 1,
+    width:Constants.MARGIN*10,
     justifyContent: 'center',
     alignItems: 'flex-end'
   },
   headerText:{  
     fontSize: Constants.FONT*25,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   descriptionView:{
     marginTop: Constants.MARGIN*2,

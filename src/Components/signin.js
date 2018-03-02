@@ -5,7 +5,7 @@ import Modal from "react-native-modal";
 import { NavigationActions } from "react-navigation";
 import { connect } from "react-redux";
 import ApiLink from '../Reducers/apiReducer'
-import Spinner from 'react-native-loading-spinner-overlay';
+
 import { incrementAction, decrementAction } from "../Actions/actionCreator";
 import {Colors, Fonts, Images, Constants } from '../Themes';
 
@@ -15,8 +15,7 @@ class Login extends Component {
     this.state=({
       username: '',
       password: '',
-      isModalVisible: false,
-      visible: false
+      isModalVisible: false
     })
   }
 //juanman234+carer222@gmail.com   juanman234+clientnew@gmail.com
@@ -63,7 +62,6 @@ class Login extends Component {
   render() {
     return (
       <ImageBackground source = {Images.background} style = {styles.backgroundImage}>
-      <Spinner visible={this.state.visible} textContent={"Loading..."} textStyle={{color: '#FFF'}} />
         <View style={styles.headerView}>
           <View style={styles.flexView}>
             <TouchableOpacity onPress={this.goBackNavigation.bind(this)}>

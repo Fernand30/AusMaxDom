@@ -47,9 +47,7 @@ class Booking2 extends Component {
   
   render() {
      data = this.state.data
-     // alert(Object.keys(data))
-     // startdate = ''
-     // enddate = ''
+     //alert(JSON.stringify(global.userData.accountType))
      imageUrl = 'http://members.maxfreedom.com.au/images/'+data.profileImageClient;
      startdate  = data.DateCreated
      enddate  = data.selectedDate
@@ -70,33 +68,64 @@ class Booking2 extends Component {
             
           </View>
         </View>
-        <Text style={styles.waiting}>Waiting</Text>
+        {(global.userData.accountType=='client')?
+            <View style={styles.typeView}>
+              <View style={styles.commonRowView}>
+                <Text style={styles.statusText}>Status: </Text>
+                <Text style={styles.waitingText}>Waiting</Text>
+              </View>
+              <TouchableOpacity style={styles.cancelSeesion}>
+                <Text style={styles.cancelText}>Cancel session</Text>
+              </TouchableOpacity>
+            </View>:<Text style={styles.waiting}>Waiting</Text>}
         <Image source={{uri:imageUrl}} style={styles.provider}/>
         <Text style={styles.name}>{data.coachName}</Text>   
-        <Text style={styles.infoText}>{data.comment}</Text>   
+        
         <Image source={Images.stars} style={styles.star}/>  
-        <View style={styles.rowView}>
-          <View style={styles.greyView}>
-            <Text style={styles.blackText}>Today 24 Jan 2018</Text>
-            <Text style={styles.infoText}>Timing</Text>
-            <Text style={styles.infoText}>{res2[0]} - {res1[0]}</Text>
-          </View>
-          <View style={styles.greyView}>
-          <Text style={styles.blackText}></Text>
-            <Text style={styles.infoText}>Fee</Text>
-            <Text style={styles.infoText}>{data.price} / Session</Text>
-          </View>
-        </View>
-        <Text style={styles.about}>About Doctor</Text>    
-        <Text style={styles.infoText}>{aboutText}</Text>     
-        <View style={styles.arrowView}> 
-            <Text style={styles.arrowText}>2Nd Floor, Appok: Building, Mumbai</Text>
-            <View style={styles.arrowImaageView}>
-              <TouchableOpacity>
-                <Image source={Images.arrow} style={styles.arrowImage}/>
-              </TouchableOpacity>
-            </View>   
-          </View>  
+        {(global.userData.accountType=='client')?<View style={styles.rowView}>
+                  <View style={styles.greyView}>
+                    <Text style={styles.blackText}>Tursday  6 - Apr- 2018</Text>
+                    <Text style={styles.infoText}>8.00 - 9.00 am</Text>
+                  </View>
+                  <View style={styles.greyView}>
+                    <Text style={styles.infoText}>Average fee</Text>
+                    <Text style={styles.infoText}>$20</Text>
+                  </View>
+                </View>:
+              <View style={styles.rowView}>
+                  <View style={styles.greyView}>
+                    <Text style={styles.blackText}>Today 24 Jan 2018</Text>
+                    <Text style={styles.infoText}>Timing</Text>
+                    <Text style={styles.infoText}>{res2[0]} - {res1[0]}</Text>
+                  </View>
+                  <View style={styles.greyView}>
+                  <Text style={styles.blackText}></Text>
+                    <Text style={styles.infoText}>Fee</Text>
+                    <Text style={styles.infoText}>{data.price} / Session</Text>
+                  </View>
+                </View>}
+        {(global.userData.accountType=='client')?<View style={{flexDirection:'row',marginHorizontal:Constants.MARGIN*4,marginTop:Constants.MARGIN*2}}>
+                  <View style={{flexDirection:'row',flex:1}}>
+                    <Text>&#128222;</Text>
+                    <Text style={{marginLeft:Constants.MARGIN}} >0452552</Text>
+                  </View>
+                  <View style={{flexDirection:'row',flex:1,alignItems:'center'}}>
+                    <Image source={Images.messagebox} style={styles.messagebox}/>
+                    <Text style={{marginLeft:Constants.MARGIN}} >Send Message </Text>
+                  </View>
+                </View>:null}
+        {(global.userData.accountType=='client')?<View><Text style={styles.about}>Comment</Text>    
+            <Text style={styles.infoText}>{aboutText}</Text></View>:
+             <View><Text style={styles.about}>About Doctor</Text>    
+            <Text style={styles.infoText}>{aboutText}</Text></View> } 
+        {(global.userData.accountType=='client')?null:<View style={styles.arrowView}> 
+                  <Text style={styles.arrowText}>2Nd Floor, Appok: Building, Mumbai</Text>
+                  <View style={styles.arrowImaageView}>
+                    <TouchableOpacity>
+                      <Image source={Images.arrow} style={styles.arrowImage}/>
+                    </TouchableOpacity>
+                  </View>   
+                </View> }
       </View>
     );
   }
@@ -105,6 +134,31 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.white
+  },
+  statusText:{
+    fontSize: Constants.FONT*20,
+  },
+  messagebox:{
+    width:Constants.MARGIN*4,
+    height:Constants.MARGIN*4/123*85
+  },
+  cancelSeesion:{
+    paddingHorizontal: Constants.MARGIN*2,
+    paddingVertical: Constants.MARGIN,
+    backgroundColor:'red',
+    shadowOffset:{  width: 0,  height: 0,  },
+    shadowColor: 'black',
+    shadowOpacity: 1.0,
+    alignItems:'center',
+    justifyContent:'center'
+  },
+  waitingText:{
+    fontSize: Constants.FONT*20,
+    color:'#f9ba34'
+  },
+  cancelText:{
+    fontSize: Constants.FONT*20,
+    color: 'white'
   },
   arrowImage:{
     width: Constants.MARGIN*4,
@@ -170,6 +224,17 @@ const styles = StyleSheet.create({
     marginTop: Constants.MARGIN*8,
     marginRight: Constants.MARGIN*3
   },
+  typeView:{
+    flexDirection:'row',
+    marginHorizontal:Constants.MARGIN*3,
+    alignItems:'center',
+    justifyContent:'space-between',
+    marginTop: Constants.MARGIN*2
+  },
+  commonRowView:{
+    flexDirection:'row',
+    alignItems:'center'
+  },
   provider:{
     width: Constants.WIDTH/4,
     height: Constants.WIDTH/3.5,
@@ -199,7 +264,7 @@ const styles = StyleSheet.create({
   },
   star:{
     width: Constants.WIDTH/5,
-    height: Constants.WIDTH/5/427*73,
+    height: Constants.WIDTH/5/427*70,
     alignSelf:'center',
     marginTop: Constants.MARGIN*2
   },

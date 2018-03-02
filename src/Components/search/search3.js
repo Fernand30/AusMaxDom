@@ -22,7 +22,7 @@ class Booking2 extends Component {
 
 
   static navigationOptions = ({navigation}) => {
-    
+    id = navigation.state.params.id
     return{
       header: false,
     }
@@ -39,7 +39,9 @@ class Booking2 extends Component {
   }
   
   render() {
-    url = "http://members.maxfreedom.com.au/public/59893649dd7ee2da6a27b061/589851bd300f095346325c1a"
+    //alert(id)
+    //url = "http://members.maxfreedom.com.au/public/59893649dd7ee2da6a27b061/589851bd300f095346325c1a"
+    url = "http://members.maxfreedom.com.au/public/"+id+"/"+global.userData.id
       return (
       <View style={styles.container}>
       <Spinner visible={this.state.visible} textContent={"Loading..."} textStyle={{color: '#FFF'}} />

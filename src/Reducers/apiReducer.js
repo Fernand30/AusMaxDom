@@ -7,10 +7,10 @@ export const SignIn = ( username,password) => {
 	// hash = ''
 	// if(password=='password1') hash = '7c6a180b36896a0a8c02787eeafb0e4c'
   // username = 'juanman234+clientnew@gmail.com'
-   hash = '7c6a180b36896a0a8c02787eeafb0e4c'
+   //hash = '7c6a180b36896a0a8c02787eeafb0e4c'
 	 var jsonPostData = JSON.stringify({
              username: username,
-             password: hash
+             password: password
       });
       data = fetch('http://members.maxfreedom.com.au/api/login', {
            method: 'POST',
@@ -120,6 +120,15 @@ export const CurrentProfile = (id) => {
 export const SearchByService = (id) => {
   
    var url = 'http://members.maxfreedom.com.au/api/account/coach/profile/'+id
+      data = fetch(url, {
+          method: 'GET',
+            })
+      return(data)
+}
+
+export const Skills = (id) => {
+  
+   var url = 'http://members.maxfreedom.com.au/api/account/providerSearchskill/'+id
       data = fetch(url, {
           method: 'GET',
             })

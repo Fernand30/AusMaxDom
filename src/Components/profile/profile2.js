@@ -21,7 +21,8 @@ class Profile extends Component {
       this.state=({
         cameraModal: false,
         data:[],
-        visible: false
+        visible: false,
+        profile: '',
       })
     }
 
@@ -69,8 +70,9 @@ class Profile extends Component {
          .then((responseData) =>responseData.json()).then((data)=>{
              if(data.success){
                this.setState({
-                profileImage: 'http://members.maxfreedom.com.au/images/'+data.record
+                profile:data.record
                })
+               alert(data.record)
              }else{
               alert(data.errors)
              }
@@ -118,11 +120,11 @@ class Profile extends Component {
   
   render() {
     profileData  = this.state.data
-    // alert(JSON.stringify(profileData))
+    //alert(JSON.stringify(profileData))
     name = profileData.lastname+" "+profileData.firstname
     between = profileData.startWeekCron+" "+profileData.endWeekCron
     address = profileData.Address
-    imageUrl = 'http://members.maxfreedom.com.au/images/'+profileData.profileImage;
+    imageUrl = 'http://members.maxfreedom.com.au/images/'+profileData.profileImage
     return (
       <View style={styles.container}>
       <Spinner visible={this.state.visible} textContent={"Loading..."} textStyle={{color: '#FFF'}} />
@@ -149,28 +151,39 @@ class Profile extends Component {
         <Text style={styles.name}>{name}</Text>   
         <Text style={styles.infoText}>{profileData.experience}</Text>   
         <Image source={Images.stars} style={styles.star}/>  
-        <View style={styles.rowView}>
-          <View style={styles.greyView}>
-            <Text style={styles.blackText}>{between}</Text>
-            <Text style={styles.infoText}>Timing</Text>
-            <Text style={styles.infoText}>4:30 PM - 8: 30 PM</Text>
-          </View>
-          <View style={styles.greyView}>
-          <Text style={styles.blackText}></Text>
-            <Text style={styles.infoText}>Fee</Text>
-            <Text style={styles.infoText}>50 / Session</Text>
-          </View>
-        </View>
+        {(profileData.accountType=='client')?<View style={styles.rowView}>
+                  <View style={styles.clientView}>
+                    <Text style={styles.infoText}>Mobile number</Text>
+                    <Text style={styles.clientText}>{profileData.contactno}</Text>
+                  </View>
+                  <View style={styles.clientView}>
+                  
+                    <Text style={styles.infoText}>Email</Text>
+                    <Text style={styles.clientText}>{profileData.email}</Text>
+                  </View>
+                </View>:
+              <View style={styles.rowView}>
+                  <View style={styles.greyView}>
+                    <Text style={styles.blackText}>{between}</Text>
+                    <Text style={styles.infoText}>Timing</Text>
+                    <Text style={styles.infoText}>4:30 PM - 8: 30 PM</Text>
+                  </View>
+                  <View style={styles.greyView}>
+                  <Text style={styles.blackText}></Text>
+                    <Text style={styles.infoText}>Fee</Text>
+                    <Text style={styles.infoText}>{profileData.price&&profileData.price.individualPerHour} / Session</Text>
+                  </View>
+                </View>}
         <Text style={styles.about}>About Doctor</Text>    
         <Text style={styles.infoText}>{aboutText}</Text>     
-        <View style={styles.arrowView}> 
-            <Text style={styles.arrowText}>{address}</Text>
-            <View style={styles.arrowImaageView}>
-              <TouchableOpacity>
-                <Image source={Images.arrow} style={styles.arrowImage}/>
-              </TouchableOpacity>
-            </View>   
-          </View> 
+        {/*<View style={styles.arrowView}> 
+                    <Text style={styles.arrowText}>{address}</Text>
+                    <View style={styles.arrowImaageView}>
+                      <TouchableOpacity>
+                        <Image source={Images.arrow} style={styles.arrowImage}/>
+                      </TouchableOpacity>
+                    </View>   
+                  </View> */}
         <Modal isVisible={this.state.cameraModal}>
               <View style={styles.modalView}>
                 <TouchableOpacity style={styles.modalButton} onPress={this.onCamera.bind(this)} >
@@ -205,7 +218,16 @@ const styles = StyleSheet.create({
     borderColor: Colors.blackText,
     alignSelf: 'center',
     alignItems:'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    width: Constants.WIDTH/4,
+    marginTop: Constants.MARGIN,
+    padding: Constants.MARGIN,
+    shadowOffset: {
+      width: 1,
+      height: 1,
+    },
+    shadowColor: Colors.black,
+    shadowOpacity: 0.5,
   },
   modalView:{
     backgroundColor: Colors.white,
@@ -287,10 +309,23 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     paddingBottom: Constants.MARGIN*3
   }, 
+  clientView:{
+    flex : 1,
+    backgroundColor: Colors.backgrey,
+    borderColor: Colors.grey,
+    borderWidth: 1,
+    paddingVertical: Constants.MARGIN*2
+  }, 
   infoText:{
     color: Colors.blue,
     fontSize: Constants.FONT*18,
     textAlign: 'center'
+  },
+  clientText:{
+    color: 'black',
+    fontSize: Constants.FONT*18,
+    textAlign: 'center',
+    marginTop:Constants.MARGIN
   },
   blackText:{
     fontSize: Constants.FONT*22,
@@ -323,8 +358,8 @@ const styles = StyleSheet.create({
   },
   provider:{
     width: Constants.WIDTH/4,
-    height: Constants.WIDTH/3.5,
-    borderRadius: Constants.WIDTH/7,
+    height: Constants.WIDTH/4,
+    borderRadius: Constants.WIDTH/8,
     alignSelf:'center',
   },
   backButton:{
@@ -349,7 +384,7 @@ const styles = StyleSheet.create({
   },
   star:{
     width: Constants.WIDTH/5,
-    height: Constants.WIDTH/5/427*73,
+    height: Constants.WIDTH/5/427*70,
     alignSelf:'center',
     marginTop: Constants.MARGIN*2
   },

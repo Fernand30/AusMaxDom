@@ -40,25 +40,24 @@ class Profile extends Component {
   }
 
   onCamera(){
-    this.setState({cameraModal: false,})
-    setTimeout(() => ImagePicker.openCamera({
+    ImagePicker.openCamera({
       width: Constants.WIDTH/2,
       height: Constants.HEIGHT/2,
       cropping: true
     }).then(image => {
       this.onImageSelected(image);
-    }).catch(this.onImageCancelled), 1000)
+    }).catch(this.onImageCancelled);
   }
 
   onGallery(){
-    this.setState({cameraModal: false,})
-    setTimeout(() => ImagePicker.openPicker({
+    //this.onImageCancelled()
+    ImagePicker.openPicker({
       width: Constants.WIDTH/2,
       height: Constants.HEIGHT/2,
       cropping: true
     }).then(image => {
       this.onImageSelected(image);
-    }).catch(this.onImageCancelled), 1000)
+    }).catch(this.onImageCancelled);
   }
 
    onImageSelected = (image) => {
@@ -72,6 +71,12 @@ class Profile extends Component {
         mime: image.mime,
       },
     })
+    
+    uploadProImage(RNFetchBlob.wrap(image.path)).then((response)=>response.json()).then((data)=>{
+      responsedata = data;
+    }).catch(function(err){
+      alert(err)
+    }).done();
   }
 
   storePicture(){
@@ -109,14 +114,15 @@ class Profile extends Component {
   }
 
   onCancel(){
-    this.setState({cameraModal: false,})
+
   }
 
   goArrow(){
-    
+    alert(JSON.stringify(responsedata))
   }
 
   render() {
+
     return (
       <View style={styles.container}>
         <View style={styles.headerView}>
@@ -127,8 +133,8 @@ class Profile extends Component {
             <Text style={styles.headerText}>Fill your info</Text>
           </View>
           <View style={styles.headerRightView}>
-            <TouchableOpacity onPress={this.storePicture.bind(this)} style={styles.editImage}>
-              <Image source={Images.edit} style={styles.editImage}/>
+            <TouchableOpacity style={styles.editImage}>
+              <Image source={Images.edit}  onPress={this.storePicture.bind(this)} style={styles.editImage}/>
             </TouchableOpacity>  
           </View>
         </View>
@@ -152,26 +158,26 @@ class Profile extends Component {
           <Text style={styles.infoText}>Lorom ipsum dolor sit a mot. consectetur adipis.{'\n'}
                                         cing slit, sed do eiusmod tempor incididunt ut{'\n'}
                                        labore et dolore magna aliqua</Text>
-          <View style={styles.arrowView}> 
-            <Text style={styles.arrowText}></Text>
-            <View style={styles.arrowImaageView}>
-              <TouchableOpacity onPress={this.goArrow.bind(this)}>
-                <Image source={Images.arrow} style={styles.arrowImage}/>
-              </TouchableOpacity>
-            </View>   
-          </View> 
+          {/*<View style={styles.arrowView}> 
+                       <Text style={styles.arrowText}></Text>
+                       <View style={styles.arrowImaageView}>
+                         <TouchableOpacity onPress={this.goArrow.bind(this)}>
+                           <Image source={Images.arrow} style={styles.arrowImage}/>
+                         </TouchableOpacity>
+                       </View>   
+                     </View>*/} 
           <Modal isVisible={this.state.cameraModal}>
-              <View style={styles.modalView}>
-                <TouchableOpacity style={styles.modalButton} onPress={this.onCamera.bind(this)} >
-                  <Text style={styles.smallModalText}>Camera</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.modalButton} onPress={this.onGallery.bind(this)}>
-                  <Text style={styles.smallModalText}>Gallery</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.modalButton} onPress={this.onCancel.bind(this)} >
-                  <Text style={styles.smallModalText}>Cancel</Text>
-                </TouchableOpacity>
-              </View>
+          <View style={styles.modalView}>
+            <TouchableOpacity style={styles.modalButton} onPress={this.onCamera.bind(this)} >
+              <Text style={styles.smallModalText}>Camera</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.modalButton} onPress={this.onGallery.bind(this)}>
+              <Text style={styles.smallModalText}>Gallery</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.modalButton} onPress={this.onCancel.bind(this)} >
+              <Text style={styles.smallModalText}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
         </Modal>                              
       </View>
     );
@@ -184,6 +190,7 @@ const styles = StyleSheet.create({
   }, 
   smallModalText:{
     fontSize: Constants.FONT*15,
+    backgroundColor:'transparent'
   },
   modalButton:{
     borderWidth: 1,
@@ -207,13 +214,6 @@ const styles = StyleSheet.create({
     width: Constants.WIDTH/2,
     alignSelf:'center',
     borderRadius:Constants.MARGIN
-  },
-  modalButton:{
-    borderWidth: 1,
-    borderColor: Colors.blackText,
-    alignSelf: 'center',
-    alignItems:'center',
-    justifyContent: 'center'
   },
   arrowImage:{
     width: Constants.MARGIN*4,

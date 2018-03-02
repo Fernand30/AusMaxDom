@@ -6,7 +6,6 @@ import { NavigationActions } from "react-navigation";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { connect } from "react-redux";
 import {SignUp} from '../Reducers/apiReducer'
-import Spinner from 'react-native-loading-spinner-overlay';
 import { incrementAction, decrementAction } from "../Actions/actionCreator";
 
 import {Colors, Fonts, Images, Constants } from '../Themes';
@@ -21,7 +20,6 @@ class Login extends Component {
       isModalVisible: false,
       isRadio: false,
       data: {},
-      visible: false
     })
   }
   
@@ -40,20 +38,17 @@ class Login extends Component {
   }
 
   navigate = () => {
-    this.setState({ visible: true });
+    // this.setState({ isModalVisible: !this.state.isModalVisible });
     SignUp(this.state.username,this.state.email,this.state.password,accountType).then((response)=>response.json()).then((data)=>{
-      this.setState({ visible: false });
       if(data['success']==true) this.goModalView(data);
         else this.goError(data)
     }).catch(function(err){
-      this.setState({ visible: false });
+      alert(err)
     }).done();
   };
 
   goError(data){
-    this.setState({ visible: false });
-    setTimeout(() => alert('found any error, please try again.'), 1000)
-    
+    alert(data.errors)
   }
  
   goLogin(){
@@ -118,8 +113,8 @@ class Login extends Component {
   render() {
     return (
       <ImageBackground source = {Images.grassBackground} style = {styles.backgroundImage}>
-      <Spinner visible={this.state.visible} textContent={"Loading..."} textStyle={{color: '#FFF'}} />
         <Image source={Images.mark} style={styles.mark}/>
+        
         <View style={styles.opacityView}>
           <Text style={styles.bigText}>REGISTER FOR AN ACCOUNT</Text>
           <Text style={styles.middleText}>Welcome !</Text>

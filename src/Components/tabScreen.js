@@ -64,7 +64,7 @@ export default class Screen2 extends Component {
                   });
 
                 }}
-                title='Board'
+                title='Tips'
                 titleStyle={{fontSize: 15, color:Colors.black,marginBottom:Constants.MARGIN*4,alignItems:'center',
                   marginBottom: 0,paddingVertical:15,}}
                 selectedTitleStyle={{fontSize: 15, color:Colors.black,marginBottom:Constants.MARGIN*4,alignItems:'center',
