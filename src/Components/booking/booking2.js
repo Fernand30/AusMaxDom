@@ -12,6 +12,7 @@ const height = width/3*2
 const aboutText = 'Active families benefit from increased physical\nhealth and also sharing more \'playtime\'\n'
                          +'together, and that means more laughs and \n'
                          +'memories made. So how do you pry your loved\n'
+const mon = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul','Aug', 'Sep', 'Oct', 'Nob', 'Dec']
 class Booking2 extends Component {
 //juanman234+carer222@gmail.com: client   juanman234+clientnew@gmail.com: search
 // hash = '7c6a180b36896a0a8c02787eeafb0e4c'
@@ -30,6 +31,7 @@ class Booking2 extends Component {
     this.state=({
       data:[]
     })
+
   }
 
   componentDidMount(){
@@ -45,14 +47,44 @@ class Booking2 extends Component {
     this.props.navigation.goBack()
   }
   
+  goSendMessage(){
+    alert('Functionality coming soon')
+  }
+
   render() {
      data = this.state.data
-     //alert(JSON.stringify(global.userData.accountType))
-     imageUrl = 'http://members.maxfreedom.com.au/images/'+data.profileImageClient;
-     startdate  = data.DateCreated
-     enddate  = data.selectedDate
-      res1 = String(startdate).split("T");
-      res2 = String(enddate).split("T");
+     //alert(JSON.stringify(item))
+     if(item.Status=='Pending'){
+        status = 'Pending'
+        sty = styles.orangeText
+      }else if(item.Status == 'Rated'){
+        status = 'Rated'
+        sty = styles.greenText
+      }else if(item.Status == 'Canceled'){
+        status = 'Canceled'
+        sty = styles.redText
+      } 
+     imageUrl = 'http://members.maxfreedom.com.au/images/'+data.profileImageCoach;
+     startArray =[]
+     if(item.ratingbyclient){
+      rate= item.ratingbyclient.rating
+      if(rate==1) startArray = [1]
+      else if(rate==2) startArray = [1,2]
+      else if(rate==3) startArray = [1,2,3]
+      else if(rate==4) startArray = [1,2,3,4]
+      else if(rate==5) startArray = [1,2,3,4,5]
+      else startArray = []
+     } 
+    
+    rates = startArray.map(function(item) {
+      return (
+              <Image key={item} source={Images.star} style={styles.star}/>
+            );
+    })
+    date  = item.selectedDate
+    res = date.split("T");
+    resM = res[0].split("-")
+    realDate = resM[2]+' '+mon[Number(resM[1])]+' '+ resM[0]
       return (
       <View style={styles.container}>
         <View style={styles.headerView}>
@@ -68,23 +100,24 @@ class Booking2 extends Component {
             
           </View>
         </View>
-        {(global.userData.accountType=='client')?
-            <View style={styles.typeView}>
-              <View style={styles.commonRowView}>
-                <Text style={styles.statusText}>Status: </Text>
-                <Text style={styles.waitingText}>Waiting</Text>
-              </View>
-              <TouchableOpacity style={styles.cancelSeesion}>
-                <Text style={styles.cancelText}>Cancel session</Text>
-              </TouchableOpacity>
-            </View>:<Text style={styles.waiting}>Waiting</Text>}
+        {(global.userData.accountType=='client'&&(item.Status=='Pending'))?
+           <View style={styles.typeView}>
+                          <View style={styles.commonRowView}>
+                            <Text style={styles.statusText}>Status: </Text>
+                            <Text style={sty}>{status}</Text>
+                          </View>
+                          <TouchableOpacity style={styles.cancelSeesion}>
+                            <Text style={styles.cancelText}>Cancel session</Text>
+                          </TouchableOpacity>
+                        </View>:<Text style={styles.waiting}>Waiting</Text>}
         <Image source={{uri:imageUrl}} style={styles.provider}/>
         <Text style={styles.name}>{data.coachName}</Text>   
-        
-        <Image source={Images.stars} style={styles.star}/>  
+        <View style={{flexDirection:'row',alignSelf:'center',marginTop: Constants.MARGIN*2}}>
+          {rates}
+        </View>  
         {(global.userData.accountType=='client')?<View style={styles.rowView}>
                   <View style={styles.greyView}>
-                    <Text style={styles.blackText}>Tursday  6 - Apr- 2018</Text>
+                    <Text style={styles.blackText}>{realDate}</Text>
                     <Text style={styles.infoText}>8.00 - 9.00 am</Text>
                   </View>
                   <View style={styles.greyView}>
@@ -109,10 +142,10 @@ class Booking2 extends Component {
                     <Text>&#128222;</Text>
                     <Text style={{marginLeft:Constants.MARGIN}} >0452552</Text>
                   </View>
-                  <View style={{flexDirection:'row',flex:1,alignItems:'center'}}>
+                  <TouchableOpacity onPress={this.goSendMessage.bind(this)} style={{flexDirection:'row',flex:1,alignItems:'center'}}>
                     <Image source={Images.messagebox} style={styles.messagebox}/>
                     <Text style={{marginLeft:Constants.MARGIN}} >Send Message </Text>
-                  </View>
+                  </TouchableOpacity>
                 </View>:null}
         {(global.userData.accountType=='client')?<View><Text style={styles.about}>Comment</Text>    
             <Text style={styles.infoText}>{aboutText}</Text></View>:
@@ -155,6 +188,18 @@ const styles = StyleSheet.create({
   waitingText:{
     fontSize: Constants.FONT*20,
     color:'#f9ba34'
+  },
+  redText:{
+    fontSize: Constants.FONT*20,
+    color: Colors.red
+  },
+  greenText:{
+    fontSize: Constants.FONT*20,
+    color:Colors.green
+  },
+  orangeText:{
+    fontSize: Constants.FONT*20,
+    color:Colors.orange
   },
   cancelText:{
     fontSize: Constants.FONT*20,
@@ -237,8 +282,8 @@ const styles = StyleSheet.create({
   },
   provider:{
     width: Constants.WIDTH/4,
-    height: Constants.WIDTH/3.5,
-    borderRadius: Constants.WIDTH/7,
+    height: Constants.WIDTH/4,
+    borderRadius: Constants.WIDTH/8,
     alignSelf:'center',
     marginTop: Constants.MARGIN*8
   },
@@ -263,10 +308,8 @@ const styles = StyleSheet.create({
     marginTop: Constants.MARGIN*2
   },
   star:{
-    width: Constants.WIDTH/5,
-    height: Constants.WIDTH/5/427*70,
-    alignSelf:'center',
-    marginTop: Constants.MARGIN*2
+    width: Constants.WIDTH/25,
+    height: Constants.WIDTH/25
   },
   headerView:{
     flexDirection: 'row',

@@ -7,18 +7,10 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import {BookingList} from '../../Reducers/apiReducer'
 import {Colors, Fonts, Images, Constants } from '../../Themes';
 
-const data = [
-{id:1,title: 'John Coppola\, MD',imageUrl:Images.account,star:Images.stars,complete:false,date:'Today 11:00 AM\nOct 3, 6:00 PM'},
-{id:2,title: 'Michael Infantino, MD',imageUrl:Images.account1,star:Images.stars,complete:true,date:'23 Jan 2018'},
-{id:3,title: 'Damian Kurian\, MD',imageUrl:Images.account2,star:Images.stars,complete:true,date:'23 Jan 2018'},
-{id:4,title: 'Johnny Arnouk\, MD',imageUrl:Images.account,star:Images.stars,complete:true,date:'23 Jan 2018'},
-{id:5,title: 'Johnny Arnouk\, MD',imageUrl:Images.account1,star:Images.stars,complete:true,date:'23 Jan 2018'},
-{id:6,title: 'Johnny Arnouk\, MD',imageUrl:Images.account2,star:Images.stars,complete:true,date:'23 Jan 2018'}
-]
 
 //juanman234+carer222@gmail.com: client   juanman234+clientnew@gmail.com: search
 // hash = '7c6a180b36896a0a8c02787eeafb0e4c'
-
+const mon = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul','Aug', 'Sep', 'Oct', 'Nob', 'Dec']
 class Profile extends Component {
   static navigationOptions = {
     header: false
@@ -57,20 +49,49 @@ class Profile extends Component {
   };
 
   renderItems = ({item}) => {
-    imageUrl = 'http://members.maxfreedom.com.au/images/'+item.profileImageClient;
-    date  = item.DateCreated
+    imageUrl = 'http://members.maxfreedom.com.au/images/'+item.profileImageCoach;
+    date  = item.selectedDate
     res = date.split("T");
+    resM = res[0].split("-")
+    realDate = resM[2]+' '+mon[Number(resM[1])]+' '+ resM[0]
+    startArray =[]
+    if(item.ratingbyclient){
+      rate= item.ratingbyclient.rating
+      if(rate==1) startArray = [1]
+      else if(rate==2) startArray = [1,2]
+      else if(rate==3) startArray = [1,2,3]
+      else if(rate==4) startArray = [1,2,3,4]
+      else if(rate==5) startArray = [1,2,3,4,5]
+      else startArray = []
+    } 
+    
+    rates = startArray.map(function(item) {
+      return (
+              <Image key={item} source={Images.star} style={styles.star}/>
+            );
+    })
+    if(item.Status=='Pending'){
+      status = 'Pending'
+      sty = styles.orangeText
+    }else if(item.Status == 'Rated'){
+      status = 'Rated'
+      sty = styles.greenText
+    }else if(item.Status == 'Canceled'){
+      status = 'Canceled'
+      sty = styles.redText
+    } 
     return(
       <TouchableOpacity onPress={this.navigate.bind(this,item)} style={styles.renderView}>
         <Image source={{uri:imageUrl}} style={styles.account}/>
         <View style={styles.description}>
           <Text style={styles.title}>{item.coachName}</Text>
           <View style={styles.rowView}>
-            <Image source={item.star} style={styles.star}/>
-            {(item.Status=='completed')?<Text style={styles.completeText}>Completed</Text>:null}
+            <View style={{flexDirection:'row'}}>
+              {rates}
+            </View>
+            <Text style={sty}>{status}</Text>
           </View>
-          <Text style={styles.dateText}>{res[0]}</Text>
-          <Text style={styles.dateText}>{res[1]}</Text>
+          <Text style={styles.dateText}>{realDate}</Text>
         </View>
       </TouchableOpacity>
       )
@@ -112,8 +133,8 @@ const styles = StyleSheet.create({
   }, 
   account:{
     width: Constants.WIDTH/4,
-    height: Constants.WIDTH/3.5,
-    borderRadius: Constants.WIDTH/7
+    height: Constants.WIDTH/4,
+    borderRadius: Constants.WIDTH/8
   },
   rowView:{
     flexDirection:'row',
@@ -121,8 +142,8 @@ const styles = StyleSheet.create({
     justifyContent:'space-between'
   },
   star:{
-    width: Constants.WIDTH/5,
-    height: Constants.WIDTH/5/427*73,
+    width: Constants.WIDTH/25,
+    height: Constants.WIDTH/25,
   },
   description:{
     marginLeft: Constants.MARGIN*3,
@@ -133,6 +154,18 @@ const styles = StyleSheet.create({
     fontSize: Constants.FONT*25,
   },
   completeText:{
+    fontSize: Constants.FONT*25,
+    color: Colors.green
+  },
+  redText:{
+    fontSize: Constants.FONT*25,
+    color: Colors.red
+  },
+  orangeText:{
+    fontSize: Constants.FONT*25,
+    color: Colors.orange
+  },
+  greenText:{
     fontSize: Constants.FONT*25,
     color: Colors.green
   },

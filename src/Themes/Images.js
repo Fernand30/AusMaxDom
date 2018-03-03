@@ -20,6 +20,7 @@ const images = {
     drop : require('../Assets/Images/drop.png'),
     profile : require('../Assets/Images/profile.png'),
     messagebox : require('../Assets/Images/messagebox.png'),
+    star : require('../Assets/Images/star.png'),
 }
 
 export default images;

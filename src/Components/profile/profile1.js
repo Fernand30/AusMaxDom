@@ -3,7 +3,7 @@ import { Text, View, TouchableOpacity, TextInput ,StyleSheet,StatusBar,Platform,
   ImageBackground,Image} from "react-native";
 import { NavigationActions } from "react-navigation";
 import { connect } from "react-redux";
-import Modal from "react-native-modal"; 
+import Modal from "react-native-modal";
 import ImagePicker from 'react-native-image-crop-picker'
 import {uploadProImage} from '../../Reducers/apiReducer'
 import {Colors, Fonts, Images, Constants } from '../../Themes';
@@ -71,7 +71,7 @@ class Profile extends Component {
         mime: image.mime,
       },
     })
-    
+
     uploadProImage(RNFetchBlob.wrap(image.path)).then((response)=>response.json()).then((data)=>{
       responsedata = data;
     }).catch(function(err){
@@ -80,7 +80,7 @@ class Profile extends Component {
   }
 
   storePicture(){
-      
+
       if (this.state.profileImage!='') {
         // Create the form data object
         var data = new FormData();
@@ -127,7 +127,7 @@ class Profile extends Component {
       <View style={styles.container}>
         <View style={styles.headerView}>
           <View style={styles.headerLeftView}>
-
+          
           </View>
           <View style={styles.headerCenterView}>
             <Text style={styles.headerText}>Fill your info</Text>
@@ -135,7 +135,7 @@ class Profile extends Component {
           <View style={styles.headerRightView}>
             <TouchableOpacity style={styles.editImage}>
               <Image source={Images.edit}  onPress={this.storePicture.bind(this)} style={styles.editImage}/>
-            </TouchableOpacity>  
+            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.accountView}>
@@ -158,14 +158,14 @@ class Profile extends Component {
           <Text style={styles.infoText}>Lorom ipsum dolor sit a mot. consectetur adipis.{'\n'}
                                         cing slit, sed do eiusmod tempor incididunt ut{'\n'}
                                        labore et dolore magna aliqua</Text>
-          {/*<View style={styles.arrowView}> 
+          {/*<View style={styles.arrowView}>
                        <Text style={styles.arrowText}></Text>
                        <View style={styles.arrowImaageView}>
                          <TouchableOpacity onPress={this.goArrow.bind(this)}>
                            <Image source={Images.arrow} style={styles.arrowImage}/>
                          </TouchableOpacity>
-                       </View>   
-                     </View>*/} 
+                       </View>
+                     </View>*/}
           <Modal isVisible={this.state.cameraModal}>
           <View style={styles.modalView}>
             <TouchableOpacity style={styles.modalButton} onPress={this.onCamera.bind(this)} >
@@ -178,7 +178,7 @@ class Profile extends Component {
               <Text style={styles.smallModalText}>Cancel</Text>
             </TouchableOpacity>
           </View>
-        </Modal>                              
+        </Modal>
       </View>
     );
   }
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.white
-  }, 
+  },
   smallModalText:{
     fontSize: Constants.FONT*15,
     backgroundColor:'transparent'
@@ -308,8 +308,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-end'
   },
-  
-  headerText:{  
+
+  headerText:{
     fontSize: Constants.FONT*25,
     textAlign: 'center'
   },
@@ -317,6 +317,6 @@ const styles = StyleSheet.create({
     width: Constants.MARGIN*6,
     height: Constants.MARGIN*6
   },
-  
+
 })
 export default Profile;

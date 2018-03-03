@@ -36,6 +36,23 @@ class Booking2 extends Component {
   render() {
     //alert(Object.keys(item))
      imageUrl = 'http://members.maxfreedom.com.au/images/'+item.profileImage;
+
+     startArray =[]
+     if(item.ratingbyclient){
+      rate= item.ratingbyclient.rating
+      if(rate==1) startArray = [1]
+      else if(rate==2) startArray = [1,2]
+      else if(rate==3) startArray = [1,2,3]
+      else if(rate==4) startArray = [1,2,3,4]
+      else if(rate==5) startArray = [1,2,3,4,5]
+      else startArray = []
+     } 
+    
+    rates = startArray.map(function(item) {
+      return (
+              <Image key={item} source={Images.star} style={styles.star}/>
+            );
+    })
       return (
       <View style={styles.container}>
         <View style={styles.headerView}>
@@ -55,8 +72,10 @@ class Booking2 extends Component {
         {(item.profileImage)?<Image source={{uri: imageUrl}} style={styles.provider}/>:
                              <Image source={Images.emptyAccount} style={styles.provider}/> }
         
-        <Text style={styles.name}>{item.profilename}</Text>   
-        <Image source={Images.stars} style={styles.star}/>  
+        <Text style={styles.name}>{item.profilename}</Text> 
+        <View style={styles.starView}>
+          {rates}
+        </View>  
         <View style={styles.rowView}>
           <View style={styles.greyView}>
             <TouchableOpacity onPress={this.goWebView.bind(this)} style={styles.bookme}>
@@ -197,9 +216,12 @@ const styles = StyleSheet.create({
     marginTop: Constants.MARGIN*2
   },
   star:{
-    width: Constants.WIDTH/5,
-    height: Constants.WIDTH/5/427*70,
+    width: Constants.WIDTH/25,
+    height: Constants.WIDTH/25
+  },
+  starView:{
     alignSelf:'center',
+    flexDirection:'row',
     marginTop: Constants.MARGIN*2
   },
   headerView:{

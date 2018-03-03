@@ -62,6 +62,23 @@ class Profile extends Component {
   renderItems = ({item}) => {
     imageUrl = 'http://members.maxfreedom.com.au/images/'+item.profileImage;
 
+    startArray =[]
+     if(item.ratingbyclient){
+      rate= item.ratingbyclient.rating
+      if(rate==1) startArray = [1]
+      else if(rate==2) startArray = [1,2]
+      else if(rate==3) startArray = [1,2,3]
+      else if(rate==4) startArray = [1,2,3,4]
+      else if(rate==5) startArray = [1,2,3,4,5]
+      else startArray = []
+     } 
+    
+    rates = startArray.map(function(item) {
+      return (
+              <Image key={item} source={Images.star} style={styles.star}/>
+            );
+    })
+
     return(
       <TouchableOpacity onPress={this.navigate.bind(this,item)} style={styles.renderView}>
         {(item.profileImage)?<Image source={{uri: imageUrl}} style={styles.account}/>:
@@ -69,7 +86,7 @@ class Profile extends Component {
         <View style={styles.description}>
           <Text style={styles.title}>{item.profilename}</Text>
           <View style={styles.rowView}>
-            <Image source={Images.stars} style={styles.star}/>
+            {rates}
           </View>
           <Text numberOfLines={1} style={styles.dateText}>{item.skills}</Text>
         </View>
@@ -131,6 +148,7 @@ class Profile extends Component {
   render() {
     that = this
     dataArray = this.state.selectdatadata
+    //alert(dataArray)
     skillArray = this.state.skills
     selectSkills = this.state.selectSkills
     skilldata=skillArray.map(function(item) {
@@ -286,11 +304,10 @@ const styles = StyleSheet.create({
   rowView:{
     flexDirection:'row',
     alignItems:'center',
-    justifyContent:'space-between'
   },
   star:{
-    width: Constants.WIDTH/5,
-    height: Constants.WIDTH/5/427*70,
+    width: Constants.WIDTH/25,
+    height: Constants.WIDTH/25,
   },
   description:{
     marginLeft: Constants.MARGIN*3,
