@@ -1,0 +1,26 @@
+dependencies: \
+  /Users/ecuador/Downloads/AusMaxDom/node_modules/react-native/React/Base/RCTJavaScriptLoader.mm \
+  /Users/ecuador/Downloads/AusMaxDom/node_modules/react-native/React/Base/RCTJavaScriptLoader.h \
+  /Users/ecuador/Downloads/AusMaxDom/node_modules/react-native/React/Base/RCTDefines.h \
+  /Users/ecuador/Downloads/AusMaxDom/ios/build/Build/Products/Debug-iphonesimulator/include/cxxreact/JSBundleType.h \
+  /Users/ecuador/Downloads/AusMaxDom/ios/build/Build/Products/Debug-iphonesimulator/include/jschelpers/JavaScriptCore.h \
+  /Users/ecuador/Downloads/AusMaxDom/ios/build/Build/Products/Debug-iphonesimulator/include/jschelpers/JSCWrapper.h \
+  /Users/ecuador/Downloads/AusMaxDom/node_modules/react-native/React/Base/RCTBridge.h \
+  /Users/ecuador/Downloads/AusMaxDom/node_modules/react-native/React/Base/RCTBridgeDelegate.h \
+  /Users/ecuador/Downloads/AusMaxDom/node_modules/react-native/React/Base/RCTBridgeModule.h \
+  /Users/ecuador/Downloads/AusMaxDom/node_modules/react-native/React/Base/RCTFrameUpdate.h \
+  /Users/ecuador/Downloads/AusMaxDom/node_modules/react-native/React/Base/RCTInvalidating.h \
+  /Users/ecuador/Downloads/AusMaxDom/node_modules/react-native/React/Base/RCTConvert.h \
+  /Users/ecuador/Downloads/AusMaxDom/node_modules/react-native/React/Views/RCTAnimationType.h \
+  /Users/ecuador/Downloads/AusMaxDom/node_modules/react-native/React/Views/RCTBorderStyle.h \
+  /Users/ecuador/Downloads/AusMaxDom/node_modules/react-native/React/Base/RCTLog.h \
+  /Users/ecuador/Downloads/AusMaxDom/node_modules/react-native/React/Base/RCTAssert.h \
+  /Users/ecuador/Downloads/AusMaxDom/node_modules/react-native/React/Base/RCTUtils.h \
+  /Users/ecuador/Downloads/AusMaxDom/node_modules/react-native/React/Views/RCTPointerEvents.h \
+  /Users/ecuador/Downloads/AusMaxDom/node_modules/react-native/React/Views/RCTTextDecorationLineType.h \
+  /Users/ecuador/Downloads/AusMaxDom/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/Yoga.h \
+  /Users/ecuador/Downloads/AusMaxDom/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/YGEnums.h \
+  /Users/ecuador/Downloads/AusMaxDom/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/YGMacros.h \
+  /Users/ecuador/Downloads/AusMaxDom/node_modules/react-native/React/Base/RCTMultipartDataTask.h \
+  /Users/ecuador/Downloads/AusMaxDom/node_modules/react-native/React/Base/RCTMultipartStreamReader.h \
+  /Users/ecuador/Downloads/AusMaxDom/node_modules/react-native/React/Base/RCTPerformanceLogger.h

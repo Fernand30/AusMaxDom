@@ -49,6 +49,7 @@ class Profile extends Component {
   renderItems = ({item}) => {
     return(
       <TouchableOpacity onPress={this.navigate.bind(this,item)} style={styles.renderView}>
+        <Image source={Images.apple} style={styles.apple}/>
         <View style={styles.description}>
           <Text style={styles.title}>{item.title}</Text>
           <Text style={styles.descriptionText}>{item.shortdesc}</Text>
@@ -129,7 +130,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-end'
   },
-  
+  apple:{
+    width: Constants.MARGIN*10,
+    height:Constants.MARGIN*10,
+    marginTop: Constants.MARGIN*2
+  },
   headerText:{  
     fontSize: Constants.FONT*25,
     textAlign: 'center'

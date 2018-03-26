@@ -180,14 +180,12 @@ class Profile extends Component {
           </View>
         </View>
         <View style={styles.typeView}>
-          <TextInput style={styles.textinput} placeholder='Service Type' value={this.state.renderSkills}/>
+          <TextInput style={styles.textinput} underlineColorAndroid='transparent' placeholder='Service Type' value={this.state.renderSkills}/>
           <TouchableOpacity onPress={()=>this.setState({isModalVisible:true})} style={styles.dropImageView}>
             <Image source={Images.drop} style={styles.dropImage}/>
           </TouchableOpacity>
         </View>
-        {/*<View style={styles.typeView}>
-                  <TextInput onChangeText={(text) => this.goLocation.bind(this,text)} style={styles.textinput} placeholder='Location'/>
-                </View>*/}
+        
         <View style={styles.flatView}>
             <FlatList
               data={dataArray}

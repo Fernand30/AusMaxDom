@@ -55,7 +55,7 @@ class Board2 extends Component {
             
           </View>
         </View>
-        <Image source={item.provider} style={styles.provider}/>
+        <Image source={Images.people} style={styles.provider}/>
         <Text style={styles.title}>{item.title}</Text>
         <View style={styles.descriptionView}>
             <Text style={styles.descriptionText}>{item.shortdesc}</Text>

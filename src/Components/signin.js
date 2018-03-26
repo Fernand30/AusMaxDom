@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Text, View, TouchableOpacity, TextInput ,StyleSheet,StatusBar,Platform,
-  ImageBackground,Image} from "react-native";
+  ImageBackground,Image,BackHandler} from "react-native";
 import Modal from "react-native-modal"; 
 import { NavigationActions } from "react-navigation";
 import { connect } from "react-redux";
@@ -19,7 +19,22 @@ class Login extends Component {
     })
   }
 //juanman234+carer222@gmail.com   juanman234+clientnew@gmail.com
+  componentDidMount() {
+    that  = this
+    BackHandler.addEventListener('hardwareBackPress', function() {
+        that.goBackNavigation();
+        return true;
+    });
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+  }
   
+  goBackNavigation(){
+    //this.props.navigation.goBack()
+    this.props.navigation.dispatch(NavigationActions.back());
+  }  
 
   static navigationOptions = {
     headerTitle: 'Login',
@@ -47,9 +62,7 @@ class Login extends Component {
    _toggleModal = () =>
     this.setState({ isModalVisible: !this.state.isModalVisible });
 
-  goBackNavigation(){
-    this.props.navigation.goBack()
-  }  
+  
 
   goSignup(accountType){
    const SignUp = NavigationActions.navigate({
@@ -77,25 +90,6 @@ class Login extends Component {
         </View>
         
         <Text style={styles.maxText}>Maximum Freedom</Text>
-        {/*<View style={styles.insertView}>
-                    <View style={styles.rowView}>
-                      <View style={styles.imageView}>
-                        <Image source={Images.mail} style={styles.mail}/>
-                      </View>  
-                      <TextInput placeholder='Email Address' placeholderTextColor='#409cb4' 
-                              style={styles.textinput} onChangeText={(text) => this.setState({username:text})} value={this.state.username}/>
-                    </View>
-                    <View style={styles.rowView}>
-                      <View style={styles.imageView}>
-                        <Image source={Images.password} style={styles.password}/>
-                      </View>  
-                      <TextInput placeholder='Password' placeholderTextColor='#409cb4' 
-                              style={styles.textinput} onChangeText={(text) => this.setState({password:text})} value={this.state.password}/>
-                      <TouchableOpacity style={styles.question}>
-                        <Text style={styles.questionText}>?</Text>
-                      </TouchableOpacity>        
-                    </View>
-                </View>  */  }
         <View style={styles.modalView}>
             <Text style={styles.bigModalText}>Maximum Freedom</Text>
             <Text style={styles.smallModalText}>Choose your account type</Text>
@@ -109,12 +103,7 @@ class Login extends Component {
               <Text style={styles.smallModalText}>Cancel</Text>
             </TouchableOpacity>
           </View>
-        {/*<TouchableOpacity onPress={this.navigate.bind(this)} style={styles.button}>
-                  <Text style={styles.buttonText}>Sign In</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.rowButton} onPress={this._toggleModal.bind(this)}>
-                  <Text style={styles.commonText}>New Member? Sign Up!</Text>
-                </TouchableOpacity>*/}
+        
         <TouchableOpacity style={styles.rowButton} >
           <Text style={styles.commonText1}>Bringing freedom to you</Text>
         </TouchableOpacity>
@@ -185,7 +174,6 @@ const styles = StyleSheet.create({
   },
   modalView:{
     width: Constants.WIDTH- Constants.MARGIN*10,
-    height: Constants.HEIGHT/3,
     backgroundColor: Colors.white,
     borderRadius: 10,
     borderWidth: 1,

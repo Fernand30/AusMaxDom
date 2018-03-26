@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Text, View, TouchableOpacity, TextInput ,StyleSheet,StatusBar,Platform,
-  ImageBackground,Image, Dimensions} from "react-native";
+  ImageBackground,Image, Dimensions,BackHandler} from "react-native";
 import Modal from "react-native-modal"; 
 import { NavigationActions } from "react-navigation";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -21,6 +21,18 @@ class Login extends Component {
       isRadio: false,
       data: {},
     })
+  }
+
+  componentDidMount() {
+    that  = this
+    BackHandler.addEventListener('hardwareBackPress', function() {
+        that.goBackNavigation();
+        return true;
+    });
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
   }
   
 
@@ -80,7 +92,7 @@ class Login extends Component {
    }
     
   goBackNavigation(){
-    this.props.navigation.goBack()
+    this.props.navigation.dispatch(NavigationActions.back());
   }  
 
   radioChange(){
@@ -126,19 +138,19 @@ class Login extends Component {
                 <View style={styles.greyView}>
                   <Text style={styles.specialText}></Text>
                 </View>
-                <TextInput placeholder='User name' style={styles.textinput} onChangeText={(text) => this.insertUserName(text)}/>
+                <TextInput placeholder='User name' underlineColorAndroid='transparent' style={styles.textinput} onChangeText={(text) => this.insertUserName(text)}/>
               </View>
               <View style={styles.radiusView}>
                 <View style={styles.greyView}>
                   <Text style={styles.specialText}>@</Text>
                 </View>
-                <TextInput placeholder='Email' style={styles.textinput} onChangeText={(text) => this.insertEmail(text)}/>
+                <TextInput placeholder='Email' underlineColorAndroid='transparent' style={styles.textinput} onChangeText={(text) => this.insertEmail(text)}/>
               </View>
               <View style={styles.radiusView}>
                 <View style={styles.greyView}>
                   <Text style={styles.specialbigText}>*</Text>
                 </View>
-                <TextInput  placeholder='Password' onChangeText={(text) => this.insertPassword(text)} style={styles.textinput} secureTextEntry={true}/>
+                <TextInput  placeholder='Password' underlineColorAndroid='transparent' onChangeText={(text) => this.insertPassword(text)} style={styles.textinput} secureTextEntry={true}/>
               </View>
           </KeyboardAwareScrollView>    
           <View style={styles.rowView}>
@@ -308,7 +320,6 @@ const styles = StyleSheet.create({
   },
   modalView:{
     width: Constants.WIDTH- Constants.MARGIN*10,
-    height: Constants.HEIGHT/4,
     backgroundColor: Colors.white,
     borderRadius: 10,
     borderWidth: 1,

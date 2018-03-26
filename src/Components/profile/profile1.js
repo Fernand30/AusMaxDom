@@ -127,7 +127,7 @@ class Profile extends Component {
       <View style={styles.container}>
         <View style={styles.headerView}>
           <View style={styles.headerLeftView}>
-          
+
           </View>
           <View style={styles.headerCenterView}>
             <Text style={styles.headerText}>Fill your info</Text>
@@ -149,23 +149,17 @@ class Profile extends Component {
         <View style={styles.rowView}>
           <View style={styles.greyView}>
             <Text style={styles.infoText}>Timing</Text>
+            <TextInput underlineColorAndroid='transparent' style={styles.textinput}/>
           </View>
           <View style={styles.greyView}>
             <Text style={styles.infoText}>Fee</Text>
+            <TextInput underlineColorAndroid='transparent' style={styles.textinput}/>
           </View>
         </View>
         <Text style={styles.about}>About</Text>
           <Text style={styles.infoText}>Lorom ipsum dolor sit a mot. consectetur adipis.{'\n'}
                                         cing slit, sed do eiusmod tempor incididunt ut{'\n'}
                                        labore et dolore magna aliqua</Text>
-          {/*<View style={styles.arrowView}>
-                       <Text style={styles.arrowText}></Text>
-                       <View style={styles.arrowImaageView}>
-                         <TouchableOpacity onPress={this.goArrow.bind(this)}>
-                           <Image source={Images.arrow} style={styles.arrowImage}/>
-                         </TouchableOpacity>
-                       </View>
-                     </View>*/}
           <Modal isVisible={this.state.cameraModal}>
           <View style={styles.modalView}>
             <TouchableOpacity style={styles.modalButton} onPress={this.onCamera.bind(this)} >
@@ -207,6 +201,13 @@ const styles = StyleSheet.create({
     },
     shadowColor: Colors.black,
     shadowOpacity: 0.5,
+  },
+  textinput:{
+    marginTop: 5,
+    flex:1,
+    height: 40,
+    paddingLeft:5,
+    paddingVertical:0
   },
   modalView:{
     backgroundColor: Colors.white,
